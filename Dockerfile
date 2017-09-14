@@ -3,6 +3,13 @@ FROM quay.io/kwiksand/cryptocoin-base:latest
 RUN useradd -m crave
 
 ENV CRAVE_DATA=/home/crave/.crave
+    
+RUN git clone https://github.com/bitcoin/secp256k1.git && \
+    cd secp256k1 && \
+    ./autogen.sh && \
+    ./configure && \
+    make && \
+    make install
 
 USER crave
 
@@ -11,11 +18,14 @@ RUN cd /home/crave && \
     chmod 700 .ssh && \
     ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts && \
     ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts && \
-    git clone https://github.com/industrialcoinmagic/crave.git craved && \
+
+    LD_LIBRARY_PATH=/usr/local/lib && \
+    export LD_LIBRARY_PATH && \
+
+    git clone https://github.com/CooleRRSA/crave.git craved && \
     cd /home/crave/craved/src && \
     make -f makefile.unix USE_UPNP= && \
     strip craved
-    make 
     
 EXPOSE 5844 5845
 

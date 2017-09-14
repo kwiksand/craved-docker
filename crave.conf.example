@@ -1,0 +1,8 @@
+#daemon=1
+server=1
+listen=1
+rpcuser=craverpc
+rpcpassword=CHANGE_PASSWORD
+rpcallowip=127.0.0.1
+rpcport=30105
+port=30104

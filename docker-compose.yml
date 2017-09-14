@@ -1,0 +1,9 @@
+---
+daemon:
+#  build: .
+  image: quay.io/kwiksand/craved:latest
+  ports:
+   - "30104:30104"
+   - "30105:30105"
+  volumes:
+   - /media/crypto/crave:/home/crave/.crave

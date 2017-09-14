@@ -4,7 +4,8 @@ RUN useradd -m crave
 
 ENV CRAVE_DATA=/home/crave/.crave
     
-RUN git clone https://github.com/bitcoin/secp256k1.git && \
+RUN apt-get install -y libgmp-dev && \
+    git clone https://github.com/bitcoin/secp256k1.git && \
     cd secp256k1 && \
     ./autogen.sh && \
     ./configure && \
@@ -27,7 +28,7 @@ RUN cd /home/crave && \
     make -f makefile.unix USE_UPNP= && \
     strip craved
     
-EXPOSE 5844 5845
+EXPOSE 30104 30105
 
 #VOLUME ["/home/crave/.crave"]
 

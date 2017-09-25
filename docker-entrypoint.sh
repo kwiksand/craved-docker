@@ -1,28 +1,34 @@
 #!/bin/sh
 set -e
 CRAVE_DATA=/home/crave/.crave
-cd /home/crave/craved
+CONFIG_FILE=crave.conf
 
-if [ $(echo "$1" | cut -c1) = "-" ]; then
-  echo "$0: assuming arguments for craved"
+if [ -z "$1" ] || [ "$1" == "craved" ] || [ "$(echo "$1" | cut -c1)" == "-" ]; then
+  cmd=craved
+  shift
 
-  set -- craved "$@"
-fi
+  if [ ! -d $CRAVE_DATA ]; then
+    echo "$0: DATA DIR ($CRAVE_DATA) not found, please create and add config.  exiting...."
+    exit 1
+  fi
 
-if [ $(echo "$1" | cut -c1) = "-" ] || [ "$1" = "craved" ]; then
-  mkdir -p "$CRAVE_DATA"
+  if [ ! -f $CRAVE_DATA/$CONFIG_FILE ]; then
+    echo "$0: craved config ($CRAVE_DATA/$CONFIG_FILE) not found, please create.  exiting...."
+    exit 1
+  fi
+
   chmod 700 "$CRAVE_DATA"
   chown -R crave "$CRAVE_DATA"
 
-  echo "$0: setting data directory to $CRAVE_DATA"
+  if [ -z "$1" ] || [ "$(echo "$1" | cut -c1)" == "-" ]; then
+    echo "$0: assuming arguments for craved"
 
-  set -- "$@" -datadir="$CRAVE_DATA"
-fi
+    set -- $cmd "$@" -datadir="$CRAVE_DATA"
+  else
+    set -- $cmd -datadir="$CRAVE_DATA"
+  fi
 
-if [ "$1" = "craved" ] || [ "$1" = "crave-cli" ] || [ "$1" = "crave-tx" ]; then
-  echo
   exec gosu crave "$@"
+else
+  echo "This entrypoint will only execute craved, crave-cli and crave-tx"
 fi
-
-echo
-exec "$@"

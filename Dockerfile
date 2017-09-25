@@ -28,7 +28,6 @@ USER root
 
 COPY docker-entrypoint.sh /entrypoint.sh
 
-RUN chmod 777 /entrypoint.sh && cp /home/crave/craved/src/craved /usr/bin/craved && chmod 755 /usr/bin/craveda
 RUN chmod 777 /entrypoint.sh && \
     echo "\n# Some aliases to make the crave clients/tools easier to access\nalias craved='/usr/bin/craved -conf=/home/crave/.crave/crave.conf'\n\n[ ! -z \"\$TERM\" -a -r /etc/motd ] && cat /etc/motd" >> /etc/bash.bashrc && \
     echo "Crave (CRAVE) Cryptocoin Daemon\n\nUsage:\n craved help - List help options\n craved listtransactions - List Transactions\n\n" > /etc/motd && \

@@ -1,5 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+
 set -e
+
 CRAVE_DATA=/home/crave/.crave
 CONFIG_FILE=crave.conf
 

@@ -17,7 +17,7 @@ RUN cd /home/crave && \
     cd /home/crave/craved/src && \
     make -f makefile.unix USE_UPNP= && \
     strip craved && \
-    mv vraved /home/crave/bin && \
+    mv craved /home/crave/bin && \
     rm -rf /home/crave/craved
     
 EXPOSE 30104 30105

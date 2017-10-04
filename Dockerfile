@@ -2,7 +2,7 @@ FROM quay.io/kwiksand/cryptocoin-base:latest
 
 RUN useradd -m crave
 
-ENV DAEMON_RELEASE="v2.1.0.2"
+ENV DAEMON_RELEASE="v2.1.0.3"
 ENV CRAVE_DATA=/home/crave/.crave
     
 USER crave
